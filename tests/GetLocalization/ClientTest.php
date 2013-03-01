@@ -71,11 +71,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider apiArgsProvider
-     * @param $name
-     * @param $options
      */
     public function testGetApiUrl($name, $options, $expected)
     {
         $this->assertEquals($expected, $this->client->getApiUrl($name, $options));
+    }
+
+    public function testSetApiConfig()
+    {
+        $config = array('test');
+
+        $this->assertEquals($config, $this->client->setApiConfig($config)->getApiConfig());
     }
 }

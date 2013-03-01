@@ -10,6 +10,9 @@
 namespace GetLocalization;
 
 use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Message\Request;
+use Guzzle\Common\Event;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class Description
@@ -17,7 +20,7 @@ use Guzzle\Http\ClientInterface;
  * @package    GetLocalization
  * @author     Nicolò Martini <nicmartnic@gmail.com>
  */
-class Client implements ApiInterface
+class Client implements ApiInterface, EventSubscriberInterface
 {
     private $apiConfig = array(
         'baseUrl' => 'https://api.getlocalization.com/[project-name]/api/',
@@ -32,6 +35,7 @@ class Client implements ApiInterface
 
     private $projectname;
     private $username;
+    private $password;
 
     /**
      * @var ClientInterface
@@ -48,8 +52,33 @@ class Client implements ApiInterface
     {
         $this->projectname = $projectname;
         $this->username = $username;
+        $this->passowrd = $password;
 
         $this->httpClient = $httpClient;
+
+        $this->httpClient->addSubscriber($this);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getSubscribedEvents()
+    {
+        return array('client.create_request' => 'onCreateRequest');
+    }
+
+    /**
+     * Inject into the request authentication options
+     *
+     * @param \Guzzle\Common\Event $event
+     */
+    public function onCreateRequest(Event $event)
+    {
+        $data = $event->toArray();
+
+        /** @var $request Request */
+        $request = $data['request'];
+        $request->setAuth($this->username, $this->password);
     }
 
     /**
