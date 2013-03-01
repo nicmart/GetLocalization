@@ -52,7 +52,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     {
         $this->projectname = $projectname;
         $this->username = $username;
-        $this->passowrd = $password;
+        $this->password = $password;
 
         $this->httpClient = $httpClient;
 
