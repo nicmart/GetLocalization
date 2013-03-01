@@ -105,7 +105,7 @@ class Client implements ApiInterface, EventSubscriberInterface
         $url = $this->getApiUrl('listMaster');
         $response = $this->httpClient->get($url)->send();
 
-        return $response->getBody();
+        return $response->json();
     }
 
 

@@ -12,6 +12,9 @@ namespace GetLocalization\Test;
 use GetLocalization\Test;
 use GetLocalization\Client;
 use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\Message\Request;
+use Guzzle\Http\Message\Response;
+use Guzzle\Tests\GuzzleTestCase;
 
 /**
  * Unit tests for class Client
@@ -32,14 +35,40 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         'translators' => 'translators/json/',
     );
 
+
+
     /**
      * @var Client
      */
     protected $client;
 
+    /**
+     * @var Response
+     */
+    protected $mockedResponse;
+
+    /**
+     * @var callable
+     */
+    protected $responseStrategy;
+
     public function setUp()
     {
-        $this->client = new Client('test', 'user', 'pswd', new GuzzleClient);
+        $httpClient = $this->getMockBuilder('Guzzle\Http\Client')
+            ->setMethods(array('send'))
+            ->getMock()
+        ;
+
+        // This client mock returns always a response object which body is a json-encoded array
+        // containing the url and the method of the request.
+        $httpClient->expects($this->any())->method('send')->will($this->returnCallback(function($request)
+        {
+            $response = new Response(200);
+            $response->setBody(json_encode(array('url' => $request->getUrl(), 'method' => $request->getMethod())));
+            return $response;
+        }));
+
+        $this->client = new Client('test', 'user', 'pswd', $httpClient);
         $this->client->setApiConfig($this->apiConfig);
     }
 
@@ -82,5 +111,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $config = array('test');
 
         $this->assertEquals($config, $this->client->setApiConfig($config)->getApiConfig());
+    }
+
+    public function testListMaster()
+    {
+        $url = $this->client->getApiUrl('listMaster');
+
+        $response = $this->client->listMaster();
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('GET', $response['method']);
     }
 }
