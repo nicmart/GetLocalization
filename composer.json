@@ -1,0 +1,24 @@
+{
+    "name": "nicmart/getlocalization",
+    "type": "library",
+    "description": "A simple php client for GetLocalization",
+    "keywords": ["localization", "getlocalization", "translation", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolò Martini",
+            "email": "nicmartnic@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+
+    },
+    "autoload": {
+        "psr-0": {
+            "GetLocalization": "src/",
+            "GetLocalization\\Test": "tests"
+        }
+    }
+}
+
