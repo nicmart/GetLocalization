@@ -9,6 +9,7 @@
  */
 namespace GetLocalization;
 
+use Guzzle\Common\Exception\RuntimeException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Request;
 use Guzzle\Common\Event;
@@ -100,6 +101,9 @@ class Client implements ApiInterface, EventSubscriberInterface
         return $this->apiConfig;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function listMaster()
     {
         $url = $this->getApiUrl('listMaster');
@@ -108,6 +112,62 @@ class Client implements ApiInterface, EventSubscriberInterface
         return $response->json();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function createMaster($format, $language, $body, $filename)
+    {
+        $url = $this->getApiUrl('createMaster', array('file-format' => $format, 'language-tag' => $language));
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+
+        if (!$response->isSuccessful()) {
+            throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());
+        }
+
+        return $response->getBody(true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMaster($body, $filename)
+    {
+        $url = $this->getApiUrl('updateMaster');
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+
+        if (!$response->isSuccessful()) {
+            throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());
+        }
+
+        return $response->getBody(true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getZippedTranslations()
+    {
+        $url = $this->getApiUrl('translationsZip');
+        $response = $this->httpClient->get($url)->send();
+
+        return $response->getBody(true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTranslation($masterfile, $lang)
+    {
+        // TODO: Implement getTranslation() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateTranslation($masterfile, $lang)
+    {
+        // TODO: Implement updateTranslation() method.
+    }
 
     /**
      * Gives the base url of the api appended with the given arguments.

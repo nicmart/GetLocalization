@@ -21,15 +21,15 @@ namespace GetLocalization;
  */
 interface ApiInterface
 {
-/*    public function createMaster($format, $language, $body, $filename);
+    public function createMaster($format, $language, $body, $filename);
 
-    public function updateMaster($body, $filename);*/
+    public function updateMaster($body, $filename);
 
     public function listMaster();
 
- /*   public function getZippedTranslations();
+    public function getZippedTranslations();
 
     public function getTranslation($masterfile, $lang);
 
-    public function updateTranslation($masterfile, $lang);*/
+    public function updateTranslation($masterfile, $lang);
 }

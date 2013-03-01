@@ -64,7 +64,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $httpClient->expects($this->any())->method('send')->will($this->returnCallback(function($request)
         {
             $response = new Response(200);
-            $response->setBody(json_encode(array('url' => $request->getUrl(), 'method' => $request->getMethod())));
+            $response->setBody(json_encode(array(
+                'url' => $request->getUrl(),
+                'method' => $request->getMethod(),
+                'mime-type' => $request->getHeader('Content-Type', true)
+            )));
             return $response;
         }));
 
@@ -121,5 +125,38 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($url, $response['url']);
         $this->assertEquals('GET', $response['method']);
+    }
+
+    public function testCreateMaster()
+    {
+        $url = $this->client->getApiUrl('createMaster', array('file-format' => 'txt', 'language-tag' => 'en'));
+
+        $response = json_decode($this->client->createMaster('txt', 'en', 'zazaza', 'filename'), true);
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('POST', $response['method']);
+        $this->assertEquals('multipart/form-data', $response['mime-type']);
+    }
+
+    public function testUpdateMaster()
+    {
+        $url = $this->client->getApiUrl('updateMaster');
+
+        $response = json_decode($this->client->updateMaster('body', 'filename'), true);
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('POST', $response['method']);
+        $this->assertEquals('multipart/form-data', $response['mime-type']);
+    }
+
+    public function getZippedTranslations()
+    {
+        $url = $this->client->getApiUrl('translationsZip');
+
+        $response = json_decode($this->client->getZippedTranslations(), true);
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('GET', $response['method']);
+        $this->assertEquals('multipart/form-data', $response['mime-type']);
     }
 }
