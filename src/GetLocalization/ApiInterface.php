@@ -31,5 +31,5 @@ interface ApiInterface
 
     public function getTranslation($masterfile, $lang);
 
-    public function updateTranslation($masterfile, $lang);
+    public function updateTranslation($masterfile, $lang, $body);
 }

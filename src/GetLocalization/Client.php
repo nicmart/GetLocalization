@@ -107,6 +107,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     public function listMaster()
     {
         $url = $this->getApiUrl('listMaster');
+
         $response = $this->httpClient->get($url)->send();
 
         return $response->json();
@@ -118,6 +119,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     public function createMaster($format, $language, $body, $filename)
     {
         $url = $this->getApiUrl('createMaster', array('file-format' => $format, 'language-tag' => $language));
+
         $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
 
         if (!$response->isSuccessful()) {
@@ -133,6 +135,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     public function updateMaster($body, $filename)
     {
         $url = $this->getApiUrl('updateMaster');
+
         $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
 
         if (!$response->isSuccessful()) {
@@ -148,6 +151,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     public function getZippedTranslations()
     {
         $url = $this->getApiUrl('translationsZip');
+
         $response = $this->httpClient->get($url)->send();
 
         return $response->getBody(true);
@@ -158,15 +162,27 @@ class Client implements ApiInterface, EventSubscriberInterface
      */
     public function getTranslation($masterfile, $lang)
     {
-        // TODO: Implement getTranslation() method.
+        $url = $this->getApiUrl('translation', array('master-file-name' => $masterfile, 'language-tag' => $lang));
+
+        $response = $this->httpClient->get($url)->send();
+
+        return $response->getBody(true);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function updateTranslation($masterfile, $lang)
+    public function updateTranslation($masterfile, $lang, $body)
     {
-        // TODO: Implement updateTranslation() method.
+        $url = $this->getApiUrl('translation', array('master-file-name' => $masterfile, 'language-tag' => $lang));
+
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+
+        if (!$response->isSuccessful()) {
+            throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());
+        }
+
+        return $response->getBody(true);
     }
 
     /**

@@ -149,7 +149,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('multipart/form-data', $response['mime-type']);
     }
 
-    public function getZippedTranslations()
+    public function testGetZippedTranslations()
     {
         $url = $this->client->getApiUrl('translationsZip');
 
@@ -157,6 +157,26 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($url, $response['url']);
         $this->assertEquals('GET', $response['method']);
+    }
+
+    public function testGetTranslation()
+    {
+        $url = $this->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
+
+        $response = json_decode($this->client->getTranslation('filename', 'it'), true);
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('GET', $response['method']);
+    }
+
+    public function testUpdateTranslation()
+    {
+        $url = $this->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
+
+        $response = json_decode($this->client->updateTranslation('filename', 'it', 'filecontent'), true);
+
+        $this->assertEquals($url, $response['url']);
+        $this->assertEquals('POST', $response['method']);
         $this->assertEquals('multipart/form-data', $response['mime-type']);
     }
 }
