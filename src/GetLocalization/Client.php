@@ -116,11 +116,14 @@ class Client implements ApiInterface, EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function createMaster($format, $language, $body, $filename)
+    public function createMaster($format, $language, $filePath)
     {
         $url = $this->getApiUrl('createMaster', array('file-format' => $format, 'language-tag' => $language));
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+            ->addPostFile('file', $filePath)
+            ->send()
+        ;
 
         if (!$response->isSuccessful()) {
             throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());
@@ -132,11 +135,14 @@ class Client implements ApiInterface, EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function updateMaster($body, $filename)
+    public function updateMaster($filePath)
     {
         $url = $this->getApiUrl('updateMaster');
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+            ->addPostFile('file', $filePath)
+            ->send()
+        ;
 
         if (!$response->isSuccessful()) {
             throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());
@@ -172,11 +178,14 @@ class Client implements ApiInterface, EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function updateTranslation($masterfile, $lang, $body)
+    public function updateTranslation($masterfile, $lang, $filePath)
     {
         $url = $this->getApiUrl('translation', array('master-file-name' => $masterfile, 'language-tag' => $lang));
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'), $body)->send();
+        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+            ->addPostFile('file', $filePath)
+            ->send()
+        ;
 
         if (!$response->isSuccessful()) {
             throw new RuntimeException('Something went wrong dialing with the api server: ' . $response->getBody());

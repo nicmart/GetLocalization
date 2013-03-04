@@ -52,8 +52,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     protected $responseStrategy;
 
+    protected $fixtureFilePath;
+
     public function setUp()
     {
+        $this->fixtureFilePath = __DIR__ . '/fixture';
+
         $httpClient = $this->getMockBuilder('Guzzle\Http\Client')
             ->setMethods(array('send'))
             ->getMock()
@@ -131,7 +135,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $url = $this->client->getApiUrl('createMaster', array('file-format' => 'txt', 'language-tag' => 'en'));
 
-        $response = json_decode($this->client->createMaster('txt', 'en', 'zazaza', 'filename'), true);
+        $response = json_decode($this->client->createMaster('txt', 'en', $this->fixtureFilePath), true);
 
         $this->assertEquals($url, $response['url']);
         $this->assertEquals('POST', $response['method']);
@@ -142,7 +146,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $url = $this->client->getApiUrl('updateMaster');
 
-        $response = json_decode($this->client->updateMaster('body', 'filename'), true);
+        $response = json_decode($this->client->updateMaster($this->fixtureFilePath), true);
 
         $this->assertEquals($url, $response['url']);
         $this->assertEquals('POST', $response['method']);
@@ -173,7 +177,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $url = $this->client->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
 
-        $response = json_decode($this->client->updateTranslation('filename', 'it', 'filecontent'), true);
+        $response = json_decode($this->client->updateTranslation('filename', 'it', $this->fixtureFilePath), true);
 
         $this->assertEquals($url, $response['url']);
         $this->assertEquals('POST', $response['method']);
