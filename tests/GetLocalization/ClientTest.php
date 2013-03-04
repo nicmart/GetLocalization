@@ -161,7 +161,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTranslation()
     {
-        $url = $this->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
+        $url = $this->client->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
 
         $response = json_decode($this->client->getTranslation('filename', 'it'), true);
 
@@ -171,7 +171,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateTranslation()
     {
-        $url = $this->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
+        $url = $this->client->getApiUrl('translation', array('master-file-name' => 'filename', 'language-tag' => 'it'));
 
         $response = json_decode($this->client->updateTranslation('filename', 'it', 'filecontent'), true);
 
