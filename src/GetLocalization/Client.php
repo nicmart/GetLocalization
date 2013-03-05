@@ -61,7 +61,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -120,7 +120,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     {
         $url = $this->getApiUrl('createMaster', array('file-format' => $format, 'language-tag' => $language));
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+        $response = $this->httpClient->post($url)
             ->addPostFile('file', $filePath)
             ->send()
         ;
@@ -139,7 +139,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     {
         $url = $this->getApiUrl('updateMaster');
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+        $response = $this->httpClient->post($url)
             ->addPostFile('file', $filePath)
             ->send()
         ;
@@ -182,7 +182,7 @@ class Client implements ApiInterface, EventSubscriberInterface
     {
         $url = $this->getApiUrl('translation', array('master-file-name' => $masterfile, 'language-tag' => $lang));
 
-        $response = $this->httpClient->post($url, array('content-type' => 'multipart/form-data'))
+        $response = $this->httpClient->post($url)
             ->addPostFile('file', $filePath)
             ->send()
         ;
