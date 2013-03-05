@@ -1,6 +1,6 @@
 # GetLocalization
 
-GetLocalization is a simple php client for the [GetLocalization File Management api](http://www.getlocalization.com/library/api/get-localization-file-management-api/)
+GetLocalization is a simple php client for the [GetLocalization File Management api](http://www.getlocalization.com/library/api/get-localization-file-management-api/).
 
 [![Build Status](https://secure.travis-ci.org/nicmart/Functionals.png?branch=master)](http://travis-ci.org/nicmart/GetLocalization)
 
@@ -45,8 +45,9 @@ password and the name of your project:
 ```
 
 ## Api calls
-This library offers an one-to-one mapping with the
-[GetLocalization File Management API](http://www.getlocalization.com/library/api/get-localization-file-management-api/)
+This library offers offers an one-to-one mapping with the
+[GetLocalization File Management API](http://www.getlocalization.com/library/api/get-localization-file-management-api/).
+And that's all. Managing merging of your local files with GetLocalization ones is up to you. 
 
 ### Managing master files
 
