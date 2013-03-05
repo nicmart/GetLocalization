@@ -39,7 +39,7 @@ interface ApiInterface
     /**
      * List master files
      *
-     * @return mixed
+     * @return array    A php array that is the json-decoded response of the get call
      */
     public function listMaster();
 
