@@ -49,6 +49,66 @@ This library offers an one-to-one mapping with the
 [GetLocalization File Management API](http://www.getlocalization.com/library/api/get-localization-file-management-api/)
 
 ### Managing master files
+#### Create a new master file
+```php
+/**
+ * @param string $format    The format of the master file
+ * @param string $language  The language of the master file
+ * @param string $filePath  The path of the local file to upload as master file
+ */
+$client->createMaster($format, $language, $filePath);
+```php
+
+#### Update a master file
+```php
+/**
+ * @param string $filePath  The path of the local file to upload as master file
+ */
+$client->updateMaster($filePath);
+```
+Be careful here to pass a file path of a file that has the same name of the master file you want to update.
+
+### List all master files
+```php
+/**
+ * List master files
+ *
+ * @return array    A php array that is the json-decoded response of the get call
+ */
+$client->listMaster();
+```
+### Managing Translations
+### Get a translation
+```php
+/**
+ * @param string $masterfile    The name of the masterfile 
+ * @param string $lang          The lang of the translation
+ * @return string               The content of the translation
+ */
+$client->getTranslation($masterfile, $lang);
+```
+
+### Update a translation
+```php
+/**
+ * @param string $masterfile    The name of the masterfile
+ * @param string $lang          The lang of the translation being uploaded
+ * @param string $filePath      The path of the local translation file
+ * @return mixed
+ */
+$client->updateTranslation($masterfile, $lang, $filePath);
+```
+
+### Get a list of all translations
+Not implemented yet
+
+### Get a zipped archive of all translations
+```php
+/**
+ * Download all translations in zip format
+ */
+$client->getZippedTranslations();
+```
 
 
 CREDITS
