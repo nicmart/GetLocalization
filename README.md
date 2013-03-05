@@ -49,6 +49,7 @@ This library offers an one-to-one mapping with the
 [GetLocalization File Management API](http://www.getlocalization.com/library/api/get-localization-file-management-api/)
 
 ### Managing master files
+
 #### Create a new master file
 ```php
 /**
@@ -57,7 +58,7 @@ This library offers an one-to-one mapping with the
  * @param string $filePath  The path of the local file to upload as master file
  */
 $client->createMaster($format, $language, $filePath);
-```php
+```
 
 #### Update a master file
 ```php
@@ -68,7 +69,7 @@ $client->updateMaster($filePath);
 ```
 Be careful here to pass a file path of a file that has the same name of the master file you want to update.
 
-### List all master files
+#### List all master files
 ```php
 /**
  * List master files
@@ -78,7 +79,7 @@ Be careful here to pass a file path of a file that has the same name of the mast
 $client->listMaster();
 ```
 ### Managing Translations
-### Get a translation
+#### Get a translation
 ```php
 /**
  * @param string $masterfile    The name of the masterfile 
@@ -88,7 +89,7 @@ $client->listMaster();
 $client->getTranslation($masterfile, $lang);
 ```
 
-### Update a translation
+#### Update a translation
 ```php
 /**
  * @param string $masterfile    The name of the masterfile
@@ -99,10 +100,10 @@ $client->getTranslation($masterfile, $lang);
 $client->updateTranslation($masterfile, $lang, $filePath);
 ```
 
-### Get a list of all translations
+#### Get a list of all translations
 Not implemented yet
 
-### Get a zipped archive of all translations
+#### Get a zipped archive of all translations
 ```php
 /**
  * Download all translations in zip format
