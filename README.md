@@ -45,7 +45,7 @@ password and the name of your project:
 ```
 
 ## Api calls
-This library offers offers an one-to-one mapping with the
+This library offers an one-to-one mapping with the
 [GetLocalization File Management API](http://www.getlocalization.com/library/api/get-localization-file-management-api/).
 And that's all. Managing merging of your local files with GetLocalization ones is up to you. 
 
@@ -115,8 +115,8 @@ $client->getZippedTranslations();
 
 CREDITS
 -----
-* This library has been written in [Comperio srl](http://www.comperio.it) to manage community driven localizations
- for [ClavisNG](http://www.comperio.it/soluzioni/clavisng/un-gestionale-per-reti-di-biblioteche/)
+* This library has been written for [Comperio srl](http://www.comperio.it) to manage community driven localizations
+ of [ClavisNG](http://www.comperio.it/soluzioni/clavisng/un-gestionale-per-reti-di-biblioteche/)
  and [DiscoveryNG](http://www.comperio.it/soluzioni/discoveryng/panoramica/)
 * We use the [Guzzle Http framework](http://guzzlephp.org/) for sending and recieve http requests.
 
