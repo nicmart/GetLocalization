@@ -11,6 +11,7 @@ namespace GetLocalization;
 
 use Guzzle\Common\Exception\RuntimeException;
 use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Message\Request;
 use Guzzle\Common\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -49,13 +50,13 @@ class Client implements ApiInterface, EventSubscriberInterface
      * @param string $password
      * @param ClientInterface $httpClient
      */
-    public function __construct($projectname, $username, $password, ClientInterface $httpClient)
+    public function __construct($projectname, $username, $password, ClientInterface $httpClient = null)
     {
         $this->projectname = $projectname;
         $this->username = $username;
         $this->password = $password;
 
-        $this->httpClient = $httpClient;
+        $this->httpClient = $httpClient ?: new GuzzleClient;
 
         $this->httpClient->addSubscriber($this);
     }
